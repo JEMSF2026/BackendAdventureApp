@@ -21,6 +21,6 @@ public class Package {
     private int id;
     private String packageName;
     private String description;
-    @OneToMany(mappedBy = "package", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Activity> activities;
 }
