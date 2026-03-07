@@ -1,5 +1,6 @@
 package org.example.backendadventureapp.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,8 @@ public class Reservation {
     private String bookingNumber;
     private LocalDateTime dateOfReservation;
     private double price;
-    @OneToMany
+    @OneToMany(mappedBy = "reservation")
+    @JsonManagedReference
     private List<Timeslot> timeslots;
 
 }
