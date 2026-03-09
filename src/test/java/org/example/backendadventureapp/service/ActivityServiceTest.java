@@ -3,10 +3,9 @@ package org.example.backendadventureapp.service;
 import org.example.backendadventureapp.model.Activity;
 import org.example.backendadventureapp.repository.ActivityRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,13 +13,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class ActivityServiceTest {
 
-    @Mock
+    @MockitoBean
     ActivityRepository activityRepository;
 
-    @InjectMocks
+    @Autowired
     ActivityService activityService;
 
     @Test
