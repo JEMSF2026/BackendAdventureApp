@@ -13,7 +13,7 @@ public class TimeslotService {
     @Autowired
     TimeslotRepository timeslotRepository;
 
-    public List<Timeslot> getAllByActivityId(int activityId) {
+    public List<Timeslot> getAllTimeslotsByActivityId(int activityId) {
         return timeslotRepository.findAllByActivityId(activityId);
     }
 }

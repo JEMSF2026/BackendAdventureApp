@@ -18,8 +18,8 @@ public class TimeslotController {
     TimeslotService timeslotService;
 
     @GetMapping("/timeslots/{activityId}")
-    public List<Timeslot> getAllByActivityId(@PathVariable int activityId) {
-        return timeslotService.getAllByActivityId(activityId);
+    public List<Timeslot> getAllTimeslotsByActivityId(@PathVariable int activityId) {
+        return timeslotService.getAllTimeslotsByActivityId(activityId);
     }
 
 }
