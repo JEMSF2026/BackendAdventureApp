@@ -26,7 +26,6 @@ public class Reservation {
     private LocalDateTime dateOfReservation;
     private double price;
     @OneToMany(mappedBy = "reservation")
-    @JsonManagedReference
     private List<Timeslot> timeslots;
 
 }

@@ -32,6 +32,7 @@ public class InitData implements CommandLineRunner {
 
         Activity a1 = new Activity();
         a1.setName("Go-Kart");
+        a1.setPrice(200);
         activityRepository.save(a1);
 
         Activity a2 = new Activity();
