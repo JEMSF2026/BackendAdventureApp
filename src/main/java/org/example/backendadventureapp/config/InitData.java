@@ -110,20 +110,24 @@ public class InitData implements CommandLineRunner {
         eq1.setName("Go-Kart hjelm #1");
         eq1.setActivity(a1);
         eq1.setEquipmentState(EquipmentState.ACTIVE);
+        equipmentRepository.save(eq1);
 
         Equipment eq2 = new Equipment();
         eq2.setName("Go-Kart #1");
         eq2.setActivity(a1);
         eq2.setEquipmentState(EquipmentState.OUT_OF_ORDER);
+        equipmentRepository.save(eq2);
 
         Equipment eq3 = new Equipment();
         eq3.setName("Paintball hjelm #1");
         eq3.setActivity(a2);
         eq3.setEquipmentState(EquipmentState.ACTIVE);
+        equipmentRepository.save(eq3);
 
         Equipment eq4 = new Equipment();
         eq4.setName("Paintball gun #1");
         eq4.setActivity(a2);
         eq4.setEquipmentState(EquipmentState.REPARATION);
+        equipmentRepository.save(eq4);
     }
 }
