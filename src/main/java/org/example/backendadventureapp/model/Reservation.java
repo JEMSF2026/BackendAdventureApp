@@ -27,5 +27,4 @@ public class Reservation {
     private double price;
     @OneToMany(mappedBy = "reservation")
     private List<Timeslot> timeslots;
-
 }

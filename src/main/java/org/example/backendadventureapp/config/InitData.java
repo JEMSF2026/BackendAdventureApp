@@ -1,13 +1,7 @@
 package org.example.backendadventureapp.config;
 
-import org.example.backendadventureapp.model.Activity;
-import org.example.backendadventureapp.model.Employee;
-import org.example.backendadventureapp.model.Reservation;
-import org.example.backendadventureapp.model.Timeslot;
-import org.example.backendadventureapp.repository.ActivityRepository;
-import org.example.backendadventureapp.repository.EmployeeRepository;
-import org.example.backendadventureapp.repository.ReservationRepository;
-import org.example.backendadventureapp.repository.TimeslotRepository;
+import org.example.backendadventureapp.model.*;
+import org.example.backendadventureapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -26,6 +20,8 @@ public class InitData implements CommandLineRunner {
     private ReservationRepository reservationRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -109,5 +105,25 @@ public class InitData implements CommandLineRunner {
         ts4.setEndTime(LocalDateTime.of(2026, 3, 9, 11, 0));
         ts4.setParticipants(5);
         timeslotRepository.save(ts4);
+
+        Equipment eq1 = new Equipment();
+        eq1.setName("Go-Kart hjelm #1");
+        eq1.setActivity(a1);
+        eq1.setEquipmentState(EquipmentState.ACTIVE);
+
+        Equipment eq2 = new Equipment();
+        eq2.setName("Go-Kart #1");
+        eq2.setActivity(a1);
+        eq2.setEquipmentState(EquipmentState.OUT_OF_ORDER);
+
+        Equipment eq3 = new Equipment();
+        eq3.setName("Paintball hjelm #1");
+        eq3.setActivity(a2);
+        eq3.setEquipmentState(EquipmentState.ACTIVE);
+
+        Equipment eq4 = new Equipment();
+        eq4.setName("Paintball gun #1");
+        eq4.setActivity(a2);
+        eq4.setEquipmentState(EquipmentState.REPARATION);
     }
 }
