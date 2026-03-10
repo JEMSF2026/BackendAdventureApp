@@ -112,7 +112,7 @@ public class InitData implements CommandLineRunner {
         eState1.setName("Active");
         equipmentStateRepository.save(eState1);
         EquipmentState eState2 = new EquipmentState();
-        eState2.setName("Out of order");
+        eState2.setName("Out of Order");
         equipmentStateRepository.save(eState2);
         EquipmentState eState3 = new EquipmentState();
         eState3.setName("Reparation");
@@ -142,6 +142,7 @@ public class InitData implements CommandLineRunner {
         eq4.setName("Paintball gun #1");
         eq4.setActivity(a2);
         eq4.setEquipmentState(eState3);
+        eq4.setDescription("Klar den 2. april");
         equipmentRepository.save(eq4);
     }
 }
