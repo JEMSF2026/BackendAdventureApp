@@ -22,6 +22,8 @@ public class InitData implements CommandLineRunner {
     private EmployeeRepository employeeRepository;
     @Autowired
     private EquipmentRepository equipmentRepository;
+    @Autowired
+    private EquipmentStateRepository equipmentStateRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -106,28 +108,36 @@ public class InitData implements CommandLineRunner {
         ts4.setParticipants(5);
         timeslotRepository.save(ts4);
 
+        EquipmentState eState1 = new EquipmentState();
+        eState1.setName("Active");
+        EquipmentState eState2 = new EquipmentState();
+        eState2.setName("Out of Order");
+        EquipmentState eState3 = new EquipmentState();
+        eState3.setName("Reparation");
+
+
         Equipment eq1 = new Equipment();
         eq1.setName("Go-Kart hjelm #1");
         eq1.setActivity(a1);
-        eq1.setEquipmentState(EquipmentState.ACTIVE);
+        eq1.setEquipmentState(eState1);
         equipmentRepository.save(eq1);
 
         Equipment eq2 = new Equipment();
         eq2.setName("Go-Kart #1");
         eq2.setActivity(a1);
-        eq2.setEquipmentState(EquipmentState.OUT_OF_ORDER);
+        eq2.setEquipmentState(eState2);
         equipmentRepository.save(eq2);
 
         Equipment eq3 = new Equipment();
         eq3.setName("Paintball hjelm #1");
         eq3.setActivity(a2);
-        eq3.setEquipmentState(EquipmentState.ACTIVE);
+        eq3.setEquipmentState(eState1);
         equipmentRepository.save(eq3);
 
         Equipment eq4 = new Equipment();
         eq4.setName("Paintball gun #1");
         eq4.setActivity(a2);
-        eq4.setEquipmentState(EquipmentState.REPARATION);
+        eq4.setEquipmentState(eState3);
         equipmentRepository.save(eq4);
     }
 }
