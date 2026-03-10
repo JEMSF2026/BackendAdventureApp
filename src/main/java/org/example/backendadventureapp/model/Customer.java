@@ -16,7 +16,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private CustomerType customerType;
     private String firstName;
     private String lastName;
