@@ -13,7 +13,7 @@ public class ActivityService {
     @Autowired
     ActivityRepository activityRepository;
 
-    public List<Activity> getAllActivities() {
+    public List<Activity> getAllActivities(){
         return activityRepository.findAll();
     }
 }
