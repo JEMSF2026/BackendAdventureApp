@@ -8,12 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationService {
 
-    ReservationRepository reservationRepository;
-
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-    }
+    private ReservationRepository reservationRepository;
 
     //fetch single reservation by bookingNumber:
     public Reservation findReservationByBookingnumber(String bookingNumber) {
