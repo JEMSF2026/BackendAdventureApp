@@ -30,11 +30,18 @@ public class InitData implements CommandLineRunner {
 
         Activity a1 = new Activity();
         a1.setName("Go-Kart");
+        a1.setMinimumAge(16);
+        a1.setMaxParticipants(4);
+        a1.setDescription("Kom og udlev dine drømme som en ægte formel-1 kører. Vi har danmarks bedste track.");
         a1.setPrice(200);
         activityRepository.save(a1);
 
         Activity a2 = new Activity();
         a2.setName("Paintball");
+        a2.setMinimumAge(14);
+        a2.setMaxParticipants(10);
+        a2.setDescription("Kom og skyd på dine venner på vores Counter-strike inspireret bane.");
+        a2.setPrice(100);
         activityRepository.save(a2);
 
         // --- Rød dag: fuldt reserveret ---
