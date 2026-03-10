@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class ActivityServiceTest {
 
-    @MockitoBean
+    @Autowired
     ActivityRepository activityRepository;
 
     @Autowired
