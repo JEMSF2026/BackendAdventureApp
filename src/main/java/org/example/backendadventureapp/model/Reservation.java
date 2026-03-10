@@ -19,12 +19,13 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne
+    //Note to self: why is this not a OneToMany?
+    @OneToOne(fetch = FetchType.EAGER)
     private Customer customer;
     private String bookingNumber;
     private LocalDateTime dateOfReservation;
     private double price;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "reservation")
     private List<Timeslot> timeslots;
 
 }
