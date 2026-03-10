@@ -1,5 +1,7 @@
 package org.example.backendadventureapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +23,9 @@ public class Timeslot {
     private int id;
     @ManyToOne
     private Activity activity;
-    @ManyToOne
+    //optional = true tilader, at en reservation godt må være NULL i databasen
+    @ManyToOne(optional = true)
+    @JsonIgnoreProperties("timeslots")
     private Reservation reservation;
     @ManyToOne
     private Employee employee;
@@ -29,4 +33,16 @@ public class Timeslot {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int participants;
+
+    @Override
+    public String toString() {
+        return "Timeslot{" +
+                "id=" + id +
+                ", day=" + dayOfActivity +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", participants=" + participants +
+                ", reservation=" + (reservation != null ? reservation.getBookingNumber() : "none") +
+                '}';
+    }
 }
