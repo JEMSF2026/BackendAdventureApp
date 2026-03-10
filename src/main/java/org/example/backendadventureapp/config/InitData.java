@@ -112,7 +112,7 @@ public class InitData implements CommandLineRunner {
         eState1.setName("Active");
         equipmentStateRepository.save(eState1);
         EquipmentState eState2 = new EquipmentState();
-        eState2.setName("Out of Order");
+        eState2.setName("Out of order");
         equipmentStateRepository.save(eState2);
         EquipmentState eState3 = new EquipmentState();
         eState3.setName("Reparation");
@@ -129,6 +129,7 @@ public class InitData implements CommandLineRunner {
         eq2.setName("Go-Kart #1");
         eq2.setActivity(a1);
         eq2.setEquipmentState(eState2);
+        eq2.setDescription("venstre hjul er punkteret");
         equipmentRepository.save(eq2);
 
         Equipment eq3 = new Equipment();
