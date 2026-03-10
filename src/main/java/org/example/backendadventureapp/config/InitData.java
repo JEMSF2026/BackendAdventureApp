@@ -110,10 +110,13 @@ public class InitData implements CommandLineRunner {
 
         EquipmentState eState1 = new EquipmentState();
         eState1.setName("Active");
+        equipmentStateRepository.save(eState1);
         EquipmentState eState2 = new EquipmentState();
         eState2.setName("Out of Order");
+        equipmentStateRepository.save(eState2);
         EquipmentState eState3 = new EquipmentState();
         eState3.setName("Reparation");
+        equipmentStateRepository.save(eState3);
 
 
         Equipment eq1 = new Equipment();
