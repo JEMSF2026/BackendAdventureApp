@@ -4,6 +4,7 @@ import org.example.backendadventureapp.model.Customer;
 import org.example.backendadventureapp.model.Reservation;
 import org.example.backendadventureapp.repository.CustomerRepository;
 import org.example.backendadventureapp.repository.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,8 @@ import java.util.Random;
 @Service
 public class ReservationService {
 
+    @Autowired
+    private ReservationRepository reservationRepository;
     private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
 
@@ -26,6 +29,9 @@ public class ReservationService {
         reservation.setBookingNumber(generateBookingNumber());
         reservation.setDateOfReservation(LocalDateTime.now());
 
+    //fetch single reservation by bookingNumber:
+    public Reservation findReservationByBookingnumber(String bookingNumber) {
+        return reservationRepository.findByBookingNumber(bookingNumber);
         Customer savedCustomer = customerRepository.save(reservation.getCustomer());
         reservation.setCustomer(savedCustomer);
 
