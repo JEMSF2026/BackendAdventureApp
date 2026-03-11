@@ -26,7 +26,11 @@ public class EquipmentService {
     public List<Equipment> getAllEquipmentByActivityId(int activityId) {
         return equipmentRepository.findAllByActivityId(activityId);
     }
-
+/*
+    public Equipment getEquipmentById(int equipmentId) {
+        return equipmentRepository.findById(equipmentId).orElseThrow();
+    }
+*/
     public Equipment saveEquipment(Equipment equipment) {
         Activity activity = activityRepository.findById(equipment.getActivity().getId()).orElseThrow();
         EquipmentState equipmentState = equipmentStateRepository.findById(equipment.getEquipmentState().getId()).orElseThrow();
@@ -41,5 +45,20 @@ public class EquipmentService {
 
     public void deleteEquipment(int equipmentId) {
         equipmentRepository.deleteById(equipmentId);
+    }
+
+    public Equipment updateEquipment(Equipment equipment) {
+        Equipment existing = equipmentRepository.findById(equipment.getId())
+                .orElseThrow();
+
+        existing.setName(equipment.getName());
+        existing.setDescription(equipment.getDescription());
+
+        existing.setActivity(activityRepository.findById(equipment.getActivity().getId())
+                .orElseThrow());
+        existing.setEquipmentState(equipmentStateRepository.findById(equipment.getEquipmentState().getId())
+                .orElseThrow());
+
+        return equipmentRepository.save(existing);
     }
 }
