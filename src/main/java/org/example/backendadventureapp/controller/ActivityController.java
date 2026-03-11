@@ -13,7 +13,7 @@ import java.util.List;
 public class ActivityController {
 
     @Autowired
-    ActivityService activityService;
+    private ActivityService activityService;
 
     @GetMapping("/activities")
     public List<Activity> getAllActivities() {

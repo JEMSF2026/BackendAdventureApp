@@ -1,13 +1,7 @@
 package org.example.backendadventureapp.config;
 
-import org.example.backendadventureapp.model.Activity;
-import org.example.backendadventureapp.model.Employee;
-import org.example.backendadventureapp.model.Reservation;
-import org.example.backendadventureapp.model.Timeslot;
-import org.example.backendadventureapp.repository.ActivityRepository;
-import org.example.backendadventureapp.repository.EmployeeRepository;
-import org.example.backendadventureapp.repository.ReservationRepository;
-import org.example.backendadventureapp.repository.TimeslotRepository;
+import org.example.backendadventureapp.model.*;
+import org.example.backendadventureapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -26,17 +20,28 @@ public class InitData implements CommandLineRunner {
     private ReservationRepository reservationRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
+    @Autowired
+    private EquipmentStateRepository equipmentStateRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
         Activity a1 = new Activity();
         a1.setName("Go-Kart");
+        a1.setMinimumAge(16);
+        a1.setMaxParticipants(4);
+        a1.setDescription("Kom og udlev dine drømme som en ægte formel-1 kører. Vi har danmarks bedste track.");
         a1.setPrice(200);
         activityRepository.save(a1);
 
         Activity a2 = new Activity();
         a2.setName("Paintball");
+        a2.setMinimumAge(14);
+        a2.setMaxParticipants(10);
+        a2.setDescription("Kom og skyd på dine venner på vores Counter-strike inspireret bane.");
+        a2.setPrice(100);
         activityRepository.save(a2);
 
         // --- Rød dag: fuldt reserveret ---
@@ -109,5 +114,42 @@ public class InitData implements CommandLineRunner {
         ts4.setEndTime(LocalDateTime.of(2026, 3, 9, 11, 0));
         ts4.setParticipants(5);
         timeslotRepository.save(ts4);
+
+        EquipmentState eState1 = new EquipmentState();
+        eState1.setName("Active");
+        equipmentStateRepository.save(eState1);
+        EquipmentState eState2 = new EquipmentState();
+        eState2.setName("Out of Order");
+        equipmentStateRepository.save(eState2);
+        EquipmentState eState3 = new EquipmentState();
+        eState3.setName("Reparation");
+        equipmentStateRepository.save(eState3);
+
+
+        Equipment eq1 = new Equipment();
+        eq1.setName("Go-Kart hjelm #1");
+        eq1.setActivity(a1);
+        eq1.setEquipmentState(eState1);
+        equipmentRepository.save(eq1);
+
+        Equipment eq2 = new Equipment();
+        eq2.setName("Go-Kart #1");
+        eq2.setActivity(a1);
+        eq2.setEquipmentState(eState2);
+        eq2.setDescription("venstre hjul er punkteret");
+        equipmentRepository.save(eq2);
+
+        Equipment eq3 = new Equipment();
+        eq3.setName("Paintball hjelm #1");
+        eq3.setActivity(a2);
+        eq3.setEquipmentState(eState1);
+        equipmentRepository.save(eq3);
+
+        Equipment eq4 = new Equipment();
+        eq4.setName("Paintball gun #1");
+        eq4.setActivity(a2);
+        eq4.setEquipmentState(eState3);
+        eq4.setDescription("Klar den 2. april");
+        equipmentRepository.save(eq4);
     }
 }

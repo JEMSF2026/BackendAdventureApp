@@ -11,7 +11,7 @@ import java.util.List;
 public class ActivityService {
 
     @Autowired
-    ActivityRepository activityRepository;
+    private ActivityRepository activityRepository;
 
     public List<Activity> getAllActivities(){
         return activityRepository.findAll();

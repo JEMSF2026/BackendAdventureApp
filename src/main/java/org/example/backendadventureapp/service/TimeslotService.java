@@ -11,7 +11,7 @@ import java.util.List;
 public class TimeslotService {
 
     @Autowired
-    TimeslotRepository timeslotRepository;
+    private TimeslotRepository timeslotRepository;
 
     public List<Timeslot> getAllTimeslotsByActivityId(int activityId) {
         return timeslotRepository.findAllByActivityId(activityId);

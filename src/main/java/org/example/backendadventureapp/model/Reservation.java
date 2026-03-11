@@ -28,5 +28,4 @@ public class Reservation {
     private double price;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "reservation")
     private List<Timeslot> timeslots;
-
 }

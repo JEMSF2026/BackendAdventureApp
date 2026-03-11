@@ -16,7 +16,7 @@ public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private EquipmentState equipmentState;
     @ManyToOne
     private Activity activity;
