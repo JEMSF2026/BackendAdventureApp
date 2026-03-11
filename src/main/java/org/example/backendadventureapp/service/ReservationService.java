@@ -87,6 +87,10 @@ public class ReservationService {
                 throw new RuntimeException("Tidspunktet er booket af en anden kunde.");
             }
 
+            if(t.getParticipants() > timeslot.getActivity().getMaxParticipants()){
+                throw new RuntimeException("For mange deltagere til aktiviteten");
+            }
+
             timeslot.setReservation(reservation);
             timeslot.setParticipants(t.getParticipants());
 
