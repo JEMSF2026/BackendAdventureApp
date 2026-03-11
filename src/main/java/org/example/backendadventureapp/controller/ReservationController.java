@@ -21,7 +21,7 @@ public class ReservationController {
     @GetMapping("/{bookingNumber}")
     public Reservation getReservationByBookingNumber(@PathVariable String bookingNumber) {
         Reservation reservation = reservationService.findReservationByBookingnumber(bookingNumber);
-        if(reservationService == null) {
+        if(reservation == null) {
             throw new RuntimeException("No reservation was found for the Bookingnumber: " + bookingNumber);
         }
         return reservation;

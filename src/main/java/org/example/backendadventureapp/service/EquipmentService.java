@@ -20,11 +20,18 @@ public class EquipmentService {
     @Autowired
     private EquipmentStateRepository equipmentStateRepository;
 
+    @Autowired
+    private ActivityRepository activityRepository;
+
     public List<Equipment> getAllEquipmentByActivityId(int activityId) {
         return equipmentRepository.findAllByActivityId(activityId);
     }
 
     public Equipment saveEquipment(Equipment equipment) {
+        Activity activity = activityRepository.findById(equipment.getActivity().getId()).orElseThrow();
+        EquipmentState equipmentState = equipmentStateRepository.findById(equipment.getEquipmentState().getId()).orElseThrow();
+        equipment.setActivity(activity);
+        equipment.setEquipmentState(equipmentState);
         return equipmentRepository.save(equipment);
     }
 
