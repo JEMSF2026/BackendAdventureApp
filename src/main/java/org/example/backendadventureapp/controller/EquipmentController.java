@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(
+        origins = "http://localhost:63342",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT}
+)
 public class EquipmentController {
 
     @Autowired
@@ -28,5 +31,10 @@ public class EquipmentController {
     @PostMapping("/equipment/save")
     public Equipment saveEquipment(@RequestBody Equipment equipment) {
         return equipmentService.saveEquipment(equipment);
+    }
+
+    @DeleteMapping("/equipment/delete/{equipmentId}")
+    public void deleteEquipment(@PathVariable int equipmentId) {
+        equipmentService.deleteEquipment(equipmentId);
     }
 }
