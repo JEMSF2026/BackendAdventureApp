@@ -45,6 +45,19 @@ class ActivityServiceTest {
     }
 
     @Test
+    void createActivity_returnsSavedActivity() {
+        Activity activity = new Activity(0, "Klatrepark", "Beskrivelse", 189.00, 7, 90, 25, Collections.emptyList());
+        Activity saved = new Activity(1, "Klatrepark", "Beskrivelse", 189.00, 7, 90, 25, Collections.emptyList());
+        when(activityRepository.save(activity)).thenReturn(saved);
+
+        Activity result = activityService.createActivity(activity);
+
+        assertEquals(1, result.getId());
+        assertEquals("Klatrepark", result.getName());
+        verify(activityRepository, times(1)).save(activity);
+    }
+
+    @Test
     void getAllActivities_returnsAllActivities() {
         List<Activity> activities = List.of(
                 new Activity(1, "Paintball", "Beskrivelse", 249.00, 12, 90, 20, Collections.emptyList()),
