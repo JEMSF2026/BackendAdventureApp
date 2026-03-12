@@ -21,6 +21,6 @@ public class Package {
     private Integer id;
     private String packageName;
     private String description;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Activity> activities;
 }

@@ -1,6 +1,7 @@
 package org.example.backendadventureapp.config;
 
 import org.example.backendadventureapp.model.*;
+import org.example.backendadventureapp.model.Package;
 import org.example.backendadventureapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -28,6 +30,8 @@ public class InitData implements CommandLineRunner {
     private CustomerTypeRepository customerTypeRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private PackageRepository packageRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -198,5 +202,17 @@ public class InitData implements CommandLineRunner {
         CustomerType companyType = new CustomerType();
         companyType.setName("Company");
         customerTypeRepository.save(companyType);
+
+        Package p1 = new Package();
+        p1.setPackageName("Teambuilding Dag");
+        p1.setDescription("En dag med Go-Kart og Paintball");
+        p1.setActivities(List.of(a1, a2));
+        packageRepository.save(p1);
+
+        Package p2 = new Package();
+        p2.setPackageName("Action Pakke");
+        p2.setDescription("Fuld fart på med Go-Kart");
+        p2.setActivities(List.of(a1));
+        packageRepository.save(p2);
     }
 }
