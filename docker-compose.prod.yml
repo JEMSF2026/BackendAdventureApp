@@ -8,7 +8,7 @@ services:
       - mysqldata:/var/lib/mysql
 
   app:
-    image: ghcr.io/YOUR_USERNAME/YOUR_PROJECT:latest
+    image: ghcr.io/jemsf2026/backendadventureapp:latest
     environment:
       DATABASE_URL: jdbc:mysql://db:3306/mydb
       DATABASE_USERNAME: root
