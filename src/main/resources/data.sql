@@ -4,19 +4,19 @@ INSERT INTO equipment_state (id, name) VALUES (2, 'Reparation');
 INSERT INTO equipment_state (id, name) VALUES (3, 'Out of Order');
 
 --EmployeeRole
-INSERT INTO employee_type (id, name) values (1,'ADMIN')
-INSERT INTO employee_type (id, name) values (2, 'ACTIVITY')
+INSERT INTO employee_role (id, name) values (1,'ADMIN');
+INSERT INTO employee_role (id, name) values (2, 'ACTIVITY');
 
 -- CustomerType
 INSERT INTO customer_type (id, name) VALUES (1, 'Privat');
 INSERT INTO customer_type (id, name) VALUES (2, 'Erhverv');
 
 -- Employee
-INSERT INTO employee (id, employee_role, first_name, last_name, phone_number, email)
-VALUES (1, 'ADMIN', 'Mads', 'Nielsen', '12345678', 'mads.nielsen@adventure.dk');
+INSERT INTO employee (id, employee_role_id, first_name, last_name, phone_number, email)
+VALUES (1, 1, 'Mads', 'Nielsen', '12345678', 'mads.nielsen@adventure.dk');
 
-INSERT INTO employee (id, employee_role, first_name, last_name, phone_number, email)
-VALUES (2, 'ACTIVITY', 'Sara', 'Hansen', '87654321', 'sara.hansen@adventure.dk');
+INSERT INTO employee (id, employee_role_id, first_name, last_name, phone_number, email)
+VALUES (2, 2, 'Sara', 'Hansen', '87654321', 'sara.hansen@adventure.dk');
 
 -- Customer
 INSERT INTO customer (id, first_name, last_name, company_name, cvr, email, phone_number, customer_type_id)
