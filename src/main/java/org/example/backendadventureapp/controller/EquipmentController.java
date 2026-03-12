@@ -18,9 +18,14 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @GetMapping("/equipment/{activityId}")
+    @GetMapping("/equipments/{activityId}")
     public List<Equipment> getAllEquipmentByActivityId(@PathVariable int activityId) {
         return equipmentService.getAllEquipmentByActivityId(activityId);
+    }
+
+    @GetMapping("/equipment/{equipmentId}")
+    public Equipment getEquipmentById(@PathVariable int equipmentId) {
+        return equipmentService.getEquipmentById(equipmentId);
     }
 
     @GetMapping("/equipmentStates")
@@ -36,5 +41,11 @@ public class EquipmentController {
     @DeleteMapping("/equipment/delete/{equipmentId}")
     public void deleteEquipment(@PathVariable int equipmentId) {
         equipmentService.deleteEquipment(equipmentId);
+    }
+
+    @PutMapping("/equipment/update/{equipmentId}")
+    public Equipment updateEquipment(@PathVariable int equipmentId, @RequestBody Equipment equipment) {
+        equipment.setId(equipmentId);
+        return equipmentService.updateEquipment(equipment);
     }
 }
