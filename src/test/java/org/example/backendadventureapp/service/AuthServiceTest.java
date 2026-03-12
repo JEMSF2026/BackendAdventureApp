@@ -21,9 +21,12 @@ class AuthServiceTest {
     @Autowired
     AuthService authService;
 
+
     // Hjælpemetode til at oprette en testmedarbejder
     Employee createEmployee() {
-        return new Employee(1, EmployeeRole.ADMIN, "Jens", "Hansen", "12345678", "jens@jemsadventure.dk");
+        EmployeeRole employeeRole = new EmployeeRole();
+        employeeRole.setName("ADMIN");
+        return new Employee(1, employeeRole, "Jens", "Hansen", "12345678", "jens@jemsadventure.dk");
     }
 
     @Test
