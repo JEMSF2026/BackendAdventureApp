@@ -3,10 +3,9 @@ package org.example.backendadventureapp.controller;
 import org.example.backendadventureapp.model.Timeslot;
 import org.example.backendadventureapp.service.TimeslotService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +19,12 @@ public class TimeslotController {
     @GetMapping("/timeslots/{activityId}")
     public List<Timeslot> getAllTimeslotsByActivityId(@PathVariable int activityId) {
         return timeslotService.getAllTimeslotsByActivityId(activityId);
+    }
+
+    @PostMapping("/timeslots")
+    public ResponseEntity<Timeslot> createTimeslot(@RequestBody Timeslot timeslot) {
+        Timeslot created = timeslotService.createTimeslot(timeslot);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
 }
