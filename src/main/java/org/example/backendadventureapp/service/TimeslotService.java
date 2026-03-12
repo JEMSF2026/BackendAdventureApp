@@ -16,4 +16,8 @@ public class TimeslotService {
     public List<Timeslot> getAllTimeslotsByActivityId(int activityId) {
         return timeslotRepository.findAllByActivityId(activityId);
     }
+
+    public Timeslot createTimeslot(Timeslot timeslot) {
+        return timeslotRepository.save(timeslot);
+    }
 }
