@@ -15,8 +15,13 @@ services:
       DATABASE_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
+
+  frontend:
+    image: ghcr.io/jemsf2026/frontendadventureapp:latest
     ports:
-      - "80:8080"
+      - "80:80"
+    depends_on:
+      - app
 
 volumes:
   mysqldata:
