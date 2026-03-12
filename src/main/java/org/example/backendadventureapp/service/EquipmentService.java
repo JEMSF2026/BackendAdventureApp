@@ -38,4 +38,8 @@ public class EquipmentService {
     public List<EquipmentState> getAllEquipmentStates() {
         return equipmentStateRepository.findAll();
     }
+
+    public void deleteEquipment(int equipmentId) {
+        equipmentRepository.deleteById(equipmentId);
+    }
 }
