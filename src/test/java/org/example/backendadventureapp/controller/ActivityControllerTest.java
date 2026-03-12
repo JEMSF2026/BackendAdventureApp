@@ -11,8 +11,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.http.MediaType;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ActivityController.class)
@@ -65,5 +69,20 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$[0].minimumAge").value(7));
 
         verify(activityService, times(1)).getAllActivities();
+    }
+
+    @Test
+    void createActivity_returns201WithCreatedActivity() throws Exception {
+        Activity created = new Activity(1, "Klatrepark", "Beskrivelse", 189.00, 7, 90, 25, Collections.emptyList());
+        when(activityService.createActivity(any(Activity.class))).thenReturn(created);
+
+        mockMvc.perform(post("/activities")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Klatrepark\",\"description\":\"Beskrivelse\",\"price\":189.00,\"minimumAge\":7,\"durationMinutes\":90,\"maxParticipants\":25}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Klatrepark"));
+
+        verify(activityService, times(1)).createActivity(any(Activity.class));
     }
 }

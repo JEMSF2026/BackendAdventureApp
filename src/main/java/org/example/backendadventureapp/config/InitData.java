@@ -24,6 +24,10 @@ public class InitData implements CommandLineRunner {
     private EquipmentRepository equipmentRepository;
     @Autowired
     private EquipmentStateRepository equipmentStateRepository;
+    @Autowired
+    private CustomerTypeRepository customerTypeRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -44,14 +48,49 @@ public class InitData implements CommandLineRunner {
         a2.setPrice(100.0);
         activityRepository.save(a2);
 
+        // Testmedarbejder til login – adgangskode er "Hansen5678" (efternavn + 4 sidste cifre af telefon)
+        Employee admin = new Employee();
+        admin.setFirstName("Jens");
+        admin.setLastName("Hansen");
+        admin.setEmail("jens@jemsadventure.dk");
+        admin.setPhoneNumber("12345678");
+        admin.setEmployeeRole(EmployeeRole.ADMIN);
+        employeeRepository.save(admin);
+
         // --- Rød dag: fuldt reserveret ---
         Employee e1 = new Employee();
         e1.setFirstName("Bo");
         employeeRepository.save(e1);
 
+        //To customer type objekter at kunne sætte:
+        CustomerType cT1 = new CustomerType();
+        cT1.setName("Private");
+        customerTypeRepository.save(cT1);
+
+        CustomerType cT2 = new CustomerType();
+        cT2.setName("Company");
+        customerTypeRepository.save(cT2);
+
+
+        Customer c1 = new Customer();
+        c1.setCustomerType(cT1);
+        c1.setFirstName("Preben");
+        c1.setLastName("DaddedBalle");
+        c1.setCompanyName(null);
+        c1.setCvr(0);
+        c1.setEmail("Preben.Daddelballe@Yahoo.dk");
+        c1.setPhoneNumber("80808080");
+        customerRepository.save(c1);
+
+
         Reservation r1 = new Reservation();
+        r1.setCustomer(c1);
         r1.setBookingNumber("1234");
+        r1.setDateOfReservation(LocalDateTime.now());
+        r1.setPrice(249.20);
+        r1.setTimeslots(null);
         reservationRepository.save(r1);
+
 
         Timeslot ts1 = new Timeslot();
         ts1.setActivity(a1);
@@ -151,5 +190,13 @@ public class InitData implements CommandLineRunner {
         eq4.setEquipmentState(eState3);
         eq4.setDescription("Klar den 2. april");
         equipmentRepository.save(eq4);
+
+        CustomerType privateType = new CustomerType();
+        privateType.setName("Private");
+        customerTypeRepository.save(privateType);
+
+        CustomerType companyType = new CustomerType();
+        companyType.setName("Company");
+        customerTypeRepository.save(companyType);
     }
 }

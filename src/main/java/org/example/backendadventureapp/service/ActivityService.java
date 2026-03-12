@@ -16,4 +16,9 @@ public class ActivityService {
     public List<Activity> getAllActivities(){
         return activityRepository.findAll();
     }
+
+    public Activity createActivity(Activity activity) {
+        // save() er en indbygget JPA-metode der både opretter og opdaterer
+        return activityRepository.save(activity);
+    }
 }
