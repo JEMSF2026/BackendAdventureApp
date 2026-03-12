@@ -26,11 +26,11 @@ public class EquipmentService {
     public List<Equipment> getAllEquipmentByActivityId(int activityId) {
         return equipmentRepository.findAllByActivityId(activityId);
     }
-/*
+
     public Equipment getEquipmentById(int equipmentId) {
         return equipmentRepository.findById(equipmentId).orElseThrow();
     }
-*/
+
     public Equipment saveEquipment(Equipment equipment) {
         Activity activity = activityRepository.findById(equipment.getActivity().getId()).orElseThrow();
         EquipmentState equipmentState = equipmentStateRepository.findById(equipment.getEquipmentState().getId()).orElseThrow();

@@ -18,16 +18,16 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @GetMapping("/equipment/{activityId}")
+    @GetMapping("/equipments/{activityId}")
     public List<Equipment> getAllEquipmentByActivityId(@PathVariable int activityId) {
         return equipmentService.getAllEquipmentByActivityId(activityId);
     }
-/*
+
     @GetMapping("/equipment/{equipmentId}")
     public Equipment getEquipmentById(@PathVariable int equipmentId) {
         return equipmentService.getEquipmentById(equipmentId);
     }
-*/
+
     @GetMapping("/equipmentStates")
     public List<EquipmentState> getAllEquipmentStates() {
         return equipmentService.getAllEquipmentStates();
