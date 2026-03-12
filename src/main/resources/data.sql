@@ -1,5 +1,5 @@
 -- EquipmentState
-INSERT INTO equipment_state (id, name) VALUES (1, 'Aktiv');
+INSERT INTO equipment_state (id, name) VALUES (1, 'Active');
 INSERT INTO equipment_state (id, name) VALUES (2, 'Reparation');
 INSERT INTO equipment_state (id, name) VALUES (3, 'Out of Order');
 
