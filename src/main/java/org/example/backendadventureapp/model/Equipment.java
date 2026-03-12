@@ -15,7 +15,7 @@ public class Equipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @ManyToOne
     private EquipmentState equipmentState;
     @ManyToOne

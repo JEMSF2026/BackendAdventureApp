@@ -20,7 +20,7 @@ public class Timeslot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @ManyToOne
     private Activity activity;
     //optional = true tilader, at en reservation godt må være NULL i databasen
@@ -32,7 +32,7 @@ public class Timeslot {
     private LocalDate dayOfActivity;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private int participants;
+    private Integer participants;
 
     @Override
     public String toString() {

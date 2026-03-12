@@ -15,13 +15,13 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @ManyToOne
     private CustomerType customerType;
     private String firstName;
     private String lastName;
     private String companyName;
-    private int cvr;
+    private Integer cvr;
     private String email;
     private String phoneNumber;
 }

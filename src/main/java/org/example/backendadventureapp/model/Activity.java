@@ -17,13 +17,13 @@ public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     private String description;
-    private double price;
-    private int minimumAge;
-    private int durationMinutes;
-    private int maxParticipants;
+    private Double price;
+    private Integer minimumAge;
+    private Integer durationMinutes;
+    private Integer maxParticipants;
     @OneToMany
     private List<Equipment> equipments;
 }

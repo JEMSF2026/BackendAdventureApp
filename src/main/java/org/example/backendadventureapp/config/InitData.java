@@ -24,6 +24,8 @@ public class InitData implements CommandLineRunner {
     private EquipmentRepository equipmentRepository;
     @Autowired
     private EquipmentStateRepository equipmentStateRepository;
+    @Autowired
+    private CustomerTypeRepository customerTypeRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -33,7 +35,7 @@ public class InitData implements CommandLineRunner {
         a1.setMinimumAge(16);
         a1.setMaxParticipants(4);
         a1.setDescription("Kom og udlev dine drømme som en ægte formel-1 kører. Vi har danmarks bedste track.");
-        a1.setPrice(200);
+        a1.setPrice(200.0);
         activityRepository.save(a1);
 
         Activity a2 = new Activity();
@@ -41,7 +43,7 @@ public class InitData implements CommandLineRunner {
         a2.setMinimumAge(14);
         a2.setMaxParticipants(10);
         a2.setDescription("Kom og skyd på dine venner på vores Counter-strike inspireret bane.");
-        a2.setPrice(100);
+        a2.setPrice(100.0);
         activityRepository.save(a2);
 
         // --- Rød dag: fuldt reserveret ---
@@ -151,5 +153,13 @@ public class InitData implements CommandLineRunner {
         eq4.setEquipmentState(eState3);
         eq4.setDescription("Klar den 2. april");
         equipmentRepository.save(eq4);
+
+        CustomerType privateType = new CustomerType();
+        privateType.setName("Private");
+        customerTypeRepository.save(privateType);
+
+        CustomerType companyType = new CustomerType();
+        companyType.setName("Company");
+        customerTypeRepository.save(companyType);
     }
 }
