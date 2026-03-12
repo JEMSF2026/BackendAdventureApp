@@ -26,6 +26,8 @@ public class InitData implements CommandLineRunner {
     private EquipmentStateRepository equipmentStateRepository;
     @Autowired
     private CustomerTypeRepository customerTypeRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -60,9 +62,35 @@ public class InitData implements CommandLineRunner {
         e1.setFirstName("Bo");
         employeeRepository.save(e1);
 
+        //To customer type objekter at kunne sætte:
+        CustomerType cT1 = new CustomerType();
+        cT1.setName("Private");
+        customerTypeRepository.save(cT1);
+
+        CustomerType cT2 = new CustomerType();
+        cT2.setName("Company");
+        customerTypeRepository.save(cT2);
+
+
+        Customer c1 = new Customer();
+        c1.setCustomerType(cT1);
+        c1.setFirstName("Preben");
+        c1.setLastName("DaddedBalle");
+        c1.setCompanyName(null);
+        c1.setCvr(0);
+        c1.setEmail("Preben.Daddelballe@Yahoo.dk");
+        c1.setPhoneNumber("80808080");
+        customerRepository.save(c1);
+
+
         Reservation r1 = new Reservation();
+        r1.setCustomer(c1);
         r1.setBookingNumber("1234");
+        r1.setDateOfReservation(LocalDateTime.now());
+        r1.setPrice(249.20);
+        r1.setTimeslots(null);
         reservationRepository.save(r1);
+
 
         Timeslot ts1 = new Timeslot();
         ts1.setActivity(a1);
