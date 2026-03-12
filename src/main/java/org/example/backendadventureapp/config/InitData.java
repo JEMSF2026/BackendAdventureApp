@@ -46,6 +46,15 @@ public class InitData implements CommandLineRunner {
         a2.setPrice(100.0);
         activityRepository.save(a2);
 
+        // Testmedarbejder til login – adgangskode er "Hansen5678" (efternavn + 4 sidste cifre af telefon)
+        Employee admin = new Employee();
+        admin.setFirstName("Jens");
+        admin.setLastName("Hansen");
+        admin.setEmail("jens@jemsadventure.dk");
+        admin.setPhoneNumber("12345678");
+        admin.setEmployeeRole(EmployeeRole.ADMIN);
+        employeeRepository.save(admin);
+
         // --- Rød dag: fuldt reserveret ---
         Employee e1 = new Employee();
         e1.setFirstName("Bo");
