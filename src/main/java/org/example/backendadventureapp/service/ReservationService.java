@@ -182,4 +182,32 @@ public class ReservationService {
 
         return result;
     }
+
+    public String getPackageTimeRange(List<Timeslot> timeslots){
+
+        LocalDateTime start = timeslots.get(0).getStartTime();
+        LocalDateTime end = timeslots.get(0).getEndTime();
+
+        for(Timeslot t : timeslots){
+            if(t.getStartTime().isBefore(start)){
+                start = t.getStartTime();
+            }
+
+            if(t.getEndTime().isAfter(end)){
+                end = t.getEndTime();
+            }
+        }
+
+        return start.toLocalTime() + " - " + end.toLocalTime();
+    }
+
+    public String getPackageTimeRangeForDate(Integer packageId, String dayOfActivity, Integer participants){
+
+        Package pkg = packageRepository.findById(packageId).orElseThrow();
+
+        List<Timeslot> timeslots =
+                findPackageTimeslots(pkg, dayOfActivity, participants);
+
+        return getPackageTimeRange(timeslots);
+    }
 }

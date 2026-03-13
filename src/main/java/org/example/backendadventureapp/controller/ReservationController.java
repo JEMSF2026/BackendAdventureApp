@@ -34,12 +34,19 @@ public class ReservationController {
         return reservationService.createReservation(reservation);
     }
 
+    @GetMapping("/packageTimeRange")
+    public String getPackageTimeRange(@RequestParam Integer packageId, @RequestParam String dayOfActivity, @RequestParam
+                                      Integer participants){
+
+        return reservationService.getPackageTimeRangeForDate(packageId, dayOfActivity, participants);
+    }
+
     @PostMapping("/packageReservation")
     public Reservation bookPackageReservation(
             @RequestParam Integer packageId,
             @RequestParam String dayOfActivity,
             @RequestParam Integer participants,
-            @RequestParam Customer customer
+            @RequestBody Customer customer
             ){
         return reservationService.createPackageReservation(packageId, dayOfActivity, participants, customer);
     }
