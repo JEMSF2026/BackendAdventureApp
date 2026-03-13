@@ -1,6 +1,7 @@
 package org.example.backendadventureapp.service;
 
 import org.example.backendadventureapp.model.*;
+import org.example.backendadventureapp.model.Package;
 import org.example.backendadventureapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
-    private ActivityRepository activityRepository;
+    private PackageRepository packageRepository;
     @Autowired
     private CustomerTypeRepository customerTypeRepository;
     @Autowired
@@ -117,5 +118,68 @@ public class ReservationService {
         int number = random.nextInt(90000000) + 10000000;
 
         return String.valueOf(number);
+    }
+
+    public Reservation createPackageReservation(Integer packageId, String dayOfActivity, Integer participants, Customer customer){
+
+        Package pkg = packageRepository.findById(packageId).orElseThrow();
+
+        Reservation reservation = new Reservation();
+
+        reservation.setCustomer(customer);
+        reservation.setBookingNumber(generateBookingNumber());
+        reservation.setDateOfReservation(LocalDateTime.now());
+
+        List<Timeslot> selectedTimeslots = findPackageTimeslots(pkg, dayOfActivity, participants);
+
+        reservation.setTimeslots(selectedTimeslots);
+
+        validateCustomer(reservation);
+
+        Customer savedCustomer = customerRepository.save(customer);
+        reservation.setCustomer(savedCustomer);
+
+        attachReservationToTimeslots(reservation);
+
+        reservation.setPrice(pkg.getPrice());
+
+        return reservationRepository.save(reservation);
+    }
+
+    public List<Timeslot> findPackageTimeslots(Package pkg, String dayOfActivity, Integer participants){
+
+        List<List<Timeslot>> activityTimeslots = new ArrayList<>();
+
+        for(Activity activity : pkg.getActivities()){
+
+            List<Timeslot> timeslots = timeslotRepository.findAllByActivityId(activity.getId());
+
+            List<Timeslot> valid = new ArrayList<>();
+
+            for(Timeslot t : timeslots){
+                if(t.getReservation() == null &&
+                t.getDayOfActivity().toString().equals(dayOfActivity)){
+                    t.setParticipants(participants);
+                    valid.add(t);
+
+                    if(valid.size() == 2){
+                        break;
+                    }
+                }
+            }
+
+            activityTimeslots.add(valid);
+
+        }
+
+        List<Timeslot> result = new ArrayList<>();
+
+        for(int round = 0; round < 2; round++){
+            for(List<Timeslot> timeslots : activityTimeslots){
+                result.add(timeslots.get(round));
+            }
+        }
+
+        return result;
     }
 }
