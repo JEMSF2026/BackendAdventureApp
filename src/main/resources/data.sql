@@ -25,6 +25,18 @@ VALUES (1, 'Lars', 'Christensen', NULL, NULL, 'lars.christensen@gmail.com', '223
 INSERT INTO customer (id, first_name, last_name, company_name, cvr, email, phone_number, customer_type_id)
 VALUES (2, 'Karin', 'Madsen', 'Madsen A/S', 12345678, 'karin.madsen@madsenas.dk', '33445566', 2);
 
+INSERT INTO customer (id, first_name, last_name, company_name, cvr, email, phone_number, customer_type_id)
+VALUES (3, 'Simon', 'Christensen', NULL, NULL, 'simon.christensen@gmail.com', '22334456', 1);
+
+INSERT INTO customer (id, first_name, last_name, company_name, cvr, email, phone_number, customer_type_id)
+VALUES (4, 'Joshua', 'Christensen', NULL, NULL, 'joshua.christensen@gmail.com', '22334457', 1);
+
+INSERT INTO customer (id, first_name, last_name, company_name, cvr, email, phone_number, customer_type_id)
+VALUES (5, 'Emil', 'Christensen', NULL, NULL, 'emil.christensen@gmail.com', '22334458', 1);
+
+INSERT INTO customer (id, first_name, last_name, company_name, cvr, email, phone_number, customer_type_id)
+VALUES (6, 'Martin', 'Christensen', NULL, NULL, 'martin.christensen@gmail.com', '22334459', 1);
+
 -- Activity
 INSERT INTO activity (id, name, description, price, minimum_age, duration_minutes, max_participants)
 VALUES (1, 'Paintball', 'Spændende paintball-kamp i vores skovbane med udstyr inkluderet.', 249.00, 12, 60, 20);
@@ -114,10 +126,22 @@ ALTER TABLE package ALTER COLUMN id RESTART WITH 4;
 
 -- Reservation
 INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
-VALUES (1, 'BNR-2026-001', '2026-03-01 10:30:00', 498.00, 1);
+VALUES (1, '00000000', '2026-03-01 10:30:00', 498.00, 1);
 
 INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
-VALUES (2, 'BNR-2026-002', '2026-03-05 14:00:00', 598.00, 2);
+VALUES (2, '11111111', '2026-03-05 14:00:00', 598.00, 2);
+
+INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
+VALUES (3, '22222222', '2026-03-05 14:00:00', 249.00, 3);
+
+INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
+VALUES (4, '33333333', '2026-03-05 14:00:00', 249.00, 4);
+
+INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
+VALUES (5, '44444444', '2026-03-05 14:00:00', 249.00, 5);
+
+INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
+VALUES (6, '55555555', '2026-03-05 14:00:00', 249.00, 6);
 
 ALTER TABLE reservation ALTER COLUMN id RESTART WITH 3;
 
@@ -136,7 +160,7 @@ INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, a
 VALUES (4, '2026-03-10', '2026-03-10 13:00:00', '2026-03-10 14:30:00', 0, 4, NULL, 2);
 
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
-VALUES (5, '2026-03-14', '2026-03-14 09:00:00', '2026-03-14 10:00:00', 0, 1, NULL, 1);
+VALUES (5, '2026-03-14', '2026-03-14 09:00:00', '2026-03-14 10:00:00', 12, 1, 3, 1);
 
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
 VALUES (6, '2026-03-17', '2026-03-17 11:00:00', '2026-03-17 11:30:00', 0, 2, NULL, 1);
@@ -283,9 +307,9 @@ VALUES (57, '2026-03-13', '2026-03-13 13:00:00', '2026-03-13 14:00:00', 0, 1, NU
 
 -- 14. marts (har allerede 09:00, tilføjer 11:00 og 13:00)
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
-VALUES (58, '2026-03-14', '2026-03-14 11:00:00', '2026-03-14 12:00:00', 0, 1, NULL, 2);
+VALUES (58, '2026-03-14', '2026-03-14 11:00:00', '2026-03-14 12:00:00', 10, 1, 4, 2);
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
-VALUES (59, '2026-03-14', '2026-03-14 13:00:00', '2026-03-14 14:00:00', 0, 1, NULL, 2);
+VALUES (59, '2026-03-14', '2026-03-14 13:00:00', '2026-03-14 14:00:00', 20, 1, 5, 2);
 
 -- 15. marts (har allerede 09:00 booket, tilføjer 11:00 og 13:00)
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
@@ -321,7 +345,7 @@ VALUES (70, '2026-03-18', '2026-03-18 13:00:00', '2026-03-18 14:00:00', 0, 1, NU
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
 VALUES (71, '2026-03-20', '2026-03-20 09:00:00', '2026-03-20 10:00:00', 0, 1, NULL, 2);
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
-VALUES (72, '2026-03-20', '2026-03-20 11:00:00', '2026-03-20 12:00:00', 0, 1, NULL, 2);
+VALUES (72, '2026-03-20', '2026-03-20 11:00:00', '2026-03-20 12:00:00', 14, 1, 6, 2);
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
 VALUES (73, '2026-03-20', '2026-03-20 13:00:00', '2026-03-20 14:00:00', 0, 1, NULL, 2);
 
