@@ -32,4 +32,12 @@ public class ReservationController {
     public Reservation bookReservation(@RequestBody Reservation reservation){
         return reservationService.createReservation(reservation);
     }
+
+    //Cancel single reservation object on object:(no deletion of reservation entity, but update of its attributes,
+    //so that Timeslot objects related to Reservation object are unrelated again.
+    @PostMapping("reservation/{id}/cancel")
+    public void deleteReservationById(@PathVariable Integer id) {
+        reservationService.cancelReservation(id);
+    }
+
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TimeslotRepository extends JpaRepository<Timeslot, Integer> {
     List<Timeslot> findAllByActivityId(int activityId);
+
 }
