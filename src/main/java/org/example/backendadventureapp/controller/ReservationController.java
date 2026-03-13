@@ -1,5 +1,6 @@
 package org.example.backendadventureapp.controller;
 
+import org.example.backendadventureapp.model.Customer;
 import org.example.backendadventureapp.model.Reservation;
 import org.example.backendadventureapp.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,15 @@ public class ReservationController {
     @PostMapping("/reservation")
     public Reservation bookReservation(@RequestBody Reservation reservation){
         return reservationService.createReservation(reservation);
+    }
+
+    @PostMapping("/packageReservation")
+    public Reservation bookPackageReservation(
+            @RequestParam Integer packageId,
+            @RequestParam String dayOfActivity,
+            @RequestParam Integer participants,
+            @RequestParam Customer customer
+            ){
+        return reservationService.createPackageReservation(packageId, dayOfActivity, participants, customer);
     }
 }
