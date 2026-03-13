@@ -20,4 +20,13 @@ public class TimeslotService {
     public Timeslot createTimeslot(Timeslot timeslot) {
         return timeslotRepository.save(timeslot);
     }
+
+    public void deleteTimeslot(int timeslotId) {
+        Timeslot timeslot = timeslotRepository.findById(timeslotId).orElseThrow();
+        if (timeslot.getReservation() == null) {
+            timeslotRepository.deleteById(timeslotId);
+        } else {
+            throw new RuntimeException("Timeslottet kan ikke slettes fordi der er en reservation på den");
+        }
+    }
 }

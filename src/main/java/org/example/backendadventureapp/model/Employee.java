@@ -16,8 +16,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    //@Enumerated(EnumType.STRING)
-    @OneToOne
+    @ManyToOne
     private EmployeeRole employeeRole;
     private String firstName;
     private String lastName;
