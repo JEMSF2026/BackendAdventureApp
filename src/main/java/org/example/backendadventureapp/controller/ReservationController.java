@@ -19,7 +19,7 @@ public class ReservationController {
 
     //Fetch single Reservation object on bookingNumber attribute:
     //Note: If reservation is null, and an exception is thrown, this endpoints might return an http response without a body.
-    @GetMapping("/{bookingNumber}")
+    @GetMapping("/reservation/{bookingNumber}")
     public Reservation getReservationByBookingNumber(@PathVariable String bookingNumber) {
         Reservation reservation = reservationService.findReservationByBookingnumber(bookingNumber);
         if(reservation == null) {

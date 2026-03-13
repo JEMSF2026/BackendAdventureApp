@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(
         origins = "http://localhost:63342",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT}
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}
 )
 public class ActivityController {
 
@@ -43,5 +43,17 @@ public class ActivityController {
     public Activity updateActivity(@PathVariable int activityId, @RequestBody Activity activity) {
         activity.setId(activityId);
         return activityService.updateActivity(activity);
+    }
+
+    // Sletter aktiviteten med det angivne id permanent fra databasen
+    // Returnerer 409 Conflict med besked hvis aktiviteten har aktive reservationer
+    @DeleteMapping("/activities/delete/{activityId}")
+    public ResponseEntity<String> deleteActivity(@PathVariable int activityId) {
+        try {
+            activityService.deleteActivityById(activityId);
+            return ResponseEntity.ok().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 }
