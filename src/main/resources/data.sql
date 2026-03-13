@@ -4,8 +4,8 @@ INSERT INTO equipment_state (id, name) VALUES (2, 'Reparation');
 INSERT INTO equipment_state (id, name) VALUES (3, 'Out of Order');
 
 --EmployeeRole
-INSERT INTO employee_type (id, name) values (1,'ADMIN');
-INSERT INTO employee_type (id, name) values (2, 'ACTIVITY');
+INSERT INTO employee_role (id, name) values (1,'ADMIN');
+INSERT INTO employee_role (id, name) values (2, 'ACTIVITY');
 
 -- CustomerType
 INSERT INTO customer_type (id, name) VALUES (1, 'Privat');
@@ -13,10 +13,10 @@ INSERT INTO customer_type (id, name) VALUES (2, 'Erhverv');
 
 -- Employee
 INSERT INTO employee (id, employee_role_id, first_name, last_name, phone_number, email)
-VALUES (1, '1', 'Mads', 'Nielsen', '12345678', 'mads.nielsen@adventure.dk');
+VALUES (1, 1, 'Mads', 'Nielsen', '12345678', 'mads.nielsen@adventure.dk');
 
-INSERT INTO employee (id, employee_role, first_name, last_name, phone_number, email)
-VALUES (2, 'ACTIVITY', 'Sara', 'Hansen', '87654321', 'sara.hansen@adventure.dk');
+INSERT INTO employee (id, employee_role_id, first_name, last_name, phone_number, email)
+VALUES (2, 2, 'Sara', 'Hansen', '87654321', 'sara.hansen@adventure.dk');
 
 -- Customer
 INSERT INTO customer (id, first_name, last_name, company_name, cvr, email, phone_number, customer_type_id)
@@ -78,6 +78,31 @@ VALUES (11, 'Hjelm Adventure #2', 'Klatrehjelm størrelse S/M – spændejusteri
 INSERT INTO equipment (id, name, description, equipment_state_id, activity_id)
 VALUES (12, 'Zipline Karabinhage #3', 'Dobbelt-lås karabinhage – låsemekanisme ude af drift', 3, 4);
 
+-- Company Packages
+INSERT INTO package (id, package_name, description, price)
+VALUES (1, 'Teambuilding Basic', 'Perfekt til mindre virksomheder – kombinerer sjov konkurrence og samarbejde.', 395);
+
+INSERT INTO package (id, package_name, description, price)
+VALUES (2, 'Action Day', 'En actionfyldt dag for medarbejdere med fart, spænding og samarbejde.', 495);
+
+INSERT INTO package (id, package_name, description, price)
+VALUES (3, 'Ultimate Adventure', 'Den ultimative firmadag med flere aktiviteter og udfordringer.', 595);
+
+-- Package Activities
+
+-- Teambuilding Basic
+INSERT INTO package_activities (package_id, activities_id) VALUES (1, 3); -- Bueskydning
+INSERT INTO package_activities (package_id, activities_id) VALUES (1, 4); -- Adventure Area
+
+-- Action Day
+INSERT INTO package_activities (package_id, activities_id) VALUES (2, 1); -- Paintball
+INSERT INTO package_activities (package_id, activities_id) VALUES (2, 2); -- Go Kart
+
+-- Ultimate Adventure
+INSERT INTO package_activities (package_id, activities_id) VALUES (3, 1);
+INSERT INTO package_activities (package_id, activities_id) VALUES (3, 2);
+INSERT INTO package_activities (package_id, activities_id) VALUES (3, 4);
+
 -- Reset sequences so auto-generated IDs don't conflict with seed data
 ALTER TABLE equipment_state ALTER COLUMN id RESTART WITH 4;
 ALTER TABLE customer_type ALTER COLUMN id RESTART WITH 3;
@@ -85,6 +110,7 @@ ALTER TABLE employee ALTER COLUMN id RESTART WITH 3;
 ALTER TABLE customer ALTER COLUMN id RESTART WITH 3;
 ALTER TABLE activity ALTER COLUMN id RESTART WITH 5;
 ALTER TABLE equipment ALTER COLUMN id RESTART WITH 13;
+ALTER TABLE package ALTER COLUMN id RESTART WITH 4;
 
 -- Reservation
 INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)

@@ -21,6 +21,7 @@ public class Package {
     private Integer id;
     private String packageName;
     private String description;
+    private Double price;
     @ManyToMany
     private List<Activity> activities;
 }
