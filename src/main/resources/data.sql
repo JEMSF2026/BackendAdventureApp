@@ -119,7 +119,7 @@ INSERT INTO package_activities (package_id, activities_id) VALUES (3, 4);
 ALTER TABLE equipment_state ALTER COLUMN id RESTART WITH 4;
 ALTER TABLE customer_type ALTER COLUMN id RESTART WITH 3;
 ALTER TABLE employee ALTER COLUMN id RESTART WITH 3;
-ALTER TABLE customer ALTER COLUMN id RESTART WITH 3;
+ALTER TABLE customer ALTER COLUMN id RESTART WITH 7;
 ALTER TABLE activity ALTER COLUMN id RESTART WITH 5;
 ALTER TABLE equipment ALTER COLUMN id RESTART WITH 13;
 ALTER TABLE package ALTER COLUMN id RESTART WITH 4;
@@ -143,7 +143,7 @@ VALUES (5, '44444444', '2026-03-05 14:00:00', 249.00, 5);
 INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
 VALUES (6, '55555555', '2026-03-05 14:00:00', 249.00, 6);
 
-ALTER TABLE reservation ALTER COLUMN id RESTART WITH 3;
+ALTER TABLE reservation ALTER COLUMN id RESTART WITH 7;
 
 -- Timeslots – marts 2026
 -- Tilgængelige timeslots (ingen reservation)
