@@ -1,6 +1,7 @@
 package org.example.backendadventureapp.service;
 
 import org.example.backendadventureapp.model.*;
+import org.example.backendadventureapp.model.Package;
 import org.example.backendadventureapp.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,7 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,9 @@ class ReservationServiceTest {
 
     @Mock
     private ActivityRepository activityRepository;
+
+    @Mock
+    private PackageRepository packageRepository;
 
     //Service is injected
     @InjectMocks
@@ -151,5 +156,131 @@ class ReservationServiceTest {
 
         assertNotNull(result);
 
+    }
+
+    @Test
+    void getPackageTimeRange_returnsCorrectRange(){
+
+        Timeslot t1 = new Timeslot();
+        t1.setStartTime(LocalDateTime.of(2026, 3, 20, 9, 0));
+        t1.setEndTime(LocalDateTime.of(2026, 3, 20, 10, 0));
+
+        Timeslot t2 = new Timeslot();
+        t2.setStartTime(LocalDateTime.of(2026, 3, 20, 11, 0));
+        t2.setEndTime(LocalDateTime.of(2026, 3, 20, 12, 0));
+
+        List<Timeslot> timeslots = List.of(t1, t2);
+
+        String result = reservationService.getPackageTimeRange(timeslots);
+
+        assertEquals("09:00 - 12:00", result);
+    }
+
+    @Test
+    void findPackageTimeslots_returnsTwoTimeslots_whenTwoAvailable(){
+
+        Activity activity = new Activity();
+        activity.setId(1);
+
+        Package pkg = new Package();
+        pkg.setActivities(List.of(activity));
+
+        Timeslot t1 = new Timeslot();
+        t1.setDayOfActivity(LocalDate.of(2026, 3, 20));
+        t1.setReservation(null);
+
+        Timeslot t2 = new Timeslot();
+        t2.setDayOfActivity(LocalDate.of(2026, 3, 20));
+        t2.setReservation(null);
+
+        when(timeslotRepository.findAllByActivityId(1))
+                .thenReturn(List.of(t1, t2));
+
+        List<Timeslot> result = reservationService.findPackageTimeslots(pkg, "2026-03-20", 10);
+
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void findPackageTimeslots_returnsEmptyList_whenLessThanTwoTimeslots(){
+
+        Activity activity = new Activity();
+        activity.setId(1);
+
+        Package pkg = new Package();
+        pkg.setActivities(List.of(activity));
+
+        Timeslot t1 = new Timeslot();
+        t1.setDayOfActivity(LocalDate.of(2026, 3, 20));
+
+        when(timeslotRepository.findAllByActivityId(1))
+                .thenReturn(List.of(t1));
+
+        List<Timeslot> result = reservationService.findPackageTimeslots(pkg, "2026-03-20", 10);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void getAvailablePackageDays_returnsAvailableDay(){
+
+        Activity activity = new Activity();
+        activity.setId(1);
+
+        Package pkg = new Package();
+        pkg.setActivities(List.of(activity));
+
+        Timeslot t1 = new Timeslot();
+        t1.setDayOfActivity(LocalDate.of(2026, 3, 20));
+        t1.setReservation(null);
+
+        Timeslot t2 = new Timeslot();
+        t2.setDayOfActivity(LocalDate.of(2026, 3, 20));
+        t2.setReservation(null);
+
+        when(packageRepository.findById(1))
+                .thenReturn(Optional.of(pkg));
+
+        when(timeslotRepository.findAllByActivityId(1))
+                .thenReturn(List.of(t1, t2));
+
+        List<String> result = reservationService.getAvailablePackageDays(1, 10);
+
+        assertTrue(result.contains("2026-03-20"));
+    }
+
+    @Test
+    void createPackageReservation_savesReservation(){
+
+        Package pkg = new Package();
+        pkg.setId(1);
+        pkg.setPrice(500.0);
+        pkg.setActivities(new ArrayList<>());
+
+        CustomerType type = new CustomerType();
+        type.setId(1);
+
+        Customer customer = new Customer();
+        customer.setFirstName("Test");
+        customer.setLastName("Testsen");
+        customer.setEmail("test@mail.dk");
+        customer.setCustomerType(type);
+
+        when(packageRepository.findById(1))
+                .thenReturn(Optional.of(pkg));
+
+        when(customerTypeRepository.findById(1))
+                .thenReturn(Optional.of(type));
+
+        when(customerRepository.save(any()))
+                .thenReturn(customer);
+
+        when(reservationRepository.save(any()))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Reservation result = reservationService.createPackageReservation(1, "2026", 10, customer);
+
+        assertNotNull(result);
+        assertEquals(500.0, result.getPrice());
     }
 }

@@ -5,6 +5,7 @@ import org.example.backendadventureapp.model.Package;
 import org.example.backendadventureapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
