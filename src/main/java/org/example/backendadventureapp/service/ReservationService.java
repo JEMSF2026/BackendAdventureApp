@@ -92,7 +92,8 @@ public class ReservationService {
                 throw new RuntimeException("Tidspunktet er booket af en anden kunde.");
             }
 
-            if(t.getParticipants() > timeslot.getActivity().getMaxParticipants()){
+            //null price = en firmapakke. Firmapakker er ikke begrænset i antal da de booker mange timeslots.
+            if(reservation.getPrice() == null && t.getParticipants() > timeslot.getActivity().getMaxParticipants()){
                 throw new RuntimeException("For mange deltagere til aktiviteten");
             }
 
@@ -135,6 +136,8 @@ public class ReservationService {
         reservation.setBookingNumber(generateBookingNumber());
         reservation.setDateOfReservation(LocalDateTime.now());
 
+        reservation.setPrice(pkg.getPrice());
+
         List<Timeslot> selectedTimeslots = findPackageTimeslots(pkg, dayOfActivity, participants);
 
         reservation.setTimeslots(selectedTimeslots);
@@ -145,8 +148,6 @@ public class ReservationService {
         reservation.setCustomer(savedCustomer);
 
         attachReservationToTimeslots(reservation);
-
-        reservation.setPrice(pkg.getPrice());
 
         return reservationRepository.save(reservation);
     }
