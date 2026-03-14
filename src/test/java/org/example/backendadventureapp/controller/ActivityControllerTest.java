@@ -17,6 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ActivityController.class)
@@ -84,5 +85,34 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$.name").value("Klatrepark"));
 
         verify(activityService, times(1)).createActivity(any(Activity.class));
+    }
+
+    @Test
+    void getActivityById_returnsActivity() throws Exception {
+        Activity activity = new Activity(1, "Paintball", "Beskrivelse", 249.00, 12, 90, 20, Collections.emptyList());
+        when(activityService.getActivityById(1)).thenReturn(activity);
+
+        mockMvc.perform(get("/activities/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Paintball"));
+
+        verify(activityService, times(1)).getActivityById(1);
+    }
+
+    @Test
+    void updateActivity_returnsUpdatedActivity() throws Exception {
+        Activity updated = new Activity(1, "Paintball Pro", "Ny beskrivelse", 299.00, 14, 90, 20, Collections.emptyList());
+        when(activityService.updateActivity(any(Activity.class))).thenReturn(updated);
+
+        mockMvc.perform(put("/activities/update/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Paintball Pro\",\"description\":\"Ny beskrivelse\",\"price\":299.00,\"minimumAge\":14,\"durationMinutes\":90,\"maxParticipants\":20}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Paintball Pro"))
+                .andExpect(jsonPath("$.price").value(299.00));
+
+        verify(activityService, times(1)).updateActivity(any(Activity.class));
     }
 }
