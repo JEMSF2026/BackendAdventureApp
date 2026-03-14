@@ -58,10 +58,6 @@ public class ReservationService {
 
         Customer customer = reservation.getCustomer();
 
-        System.out.println("firstName: " + customer.getFirstName());
-        System.out.println("lastName: " + customer.getLastName());
-        System.out.println("email: " + customer.getEmail());
-
         if(reservation.getCustomer().getFirstName() == null ||
                 reservation.getCustomer().getLastName() == null ||
                 reservation.getCustomer().getEmail() == null){
