@@ -2,10 +2,13 @@ package org.example.backendadventureapp.controller;
 
 import org.example.backendadventureapp.model.Customer;
 import org.example.backendadventureapp.model.Reservation;
+import org.example.backendadventureapp.model.Timeslot;
 import org.example.backendadventureapp.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //Note: Default behavior of Spring when using @RestController:
 //    * Wraps RunTimeExceptions in HTTP 500 response.
@@ -49,5 +52,15 @@ public class ReservationController {
             @RequestBody Customer customer
             ){
         return reservationService.createPackageReservation(packageId, dayOfActivity, participants, customer);
+    }
+
+    @GetMapping("/packageTimeslots")
+    public List<Timeslot> getPackageTimeslots(@RequestParam Integer packageId){
+        return reservationService.getPackageTimeslots(packageId);
+    }
+
+    @GetMapping("/packageAvailableDays")
+    public List<String> getAvailableDays(@RequestParam Integer packageId, @RequestParam Integer participants){
+        return reservationService.getAvailablePackageDays(packageId, participants);
     }
 }

@@ -57,6 +57,10 @@ public class ReservationService {
 
         Customer customer = reservation.getCustomer();
 
+        System.out.println("firstName: " + customer.getFirstName());
+        System.out.println("lastName: " + customer.getLastName());
+        System.out.println("email: " + customer.getEmail());
+
         if(reservation.getCustomer().getFirstName() == null ||
                 reservation.getCustomer().getLastName() == null ||
                 reservation.getCustomer().getEmail() == null){
@@ -120,6 +124,7 @@ public class ReservationService {
         return String.valueOf(number);
     }
 
+    //opretter reservation for firmapakke
     public Reservation createPackageReservation(Integer packageId, String dayOfActivity, Integer participants, Customer customer){
 
         Package pkg = packageRepository.findById(packageId).orElseThrow();
@@ -146,6 +151,7 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    // Find konkrete timeslots til firmapakken (2 timeslots per aktivitet)
     public List<Timeslot> findPackageTimeslots(Package pkg, String dayOfActivity, Integer participants){
 
         List<List<Timeslot>> activityTimeslots = new ArrayList<>();
@@ -168,8 +174,11 @@ public class ReservationService {
                 }
             }
 
-            activityTimeslots.add(valid);
+            if(valid.size() < 2){
+                return new ArrayList<>();
+            }
 
+            activityTimeslots.add(valid);
         }
 
         List<Timeslot> result = new ArrayList<>();
@@ -183,6 +192,7 @@ public class ReservationService {
         return result;
     }
 
+    //Finder start og slut tidspunkt for en firmapakke
     public String getPackageTimeRange(List<Timeslot> timeslots){
 
         LocalDateTime start = timeslots.get(0).getStartTime();
@@ -201,6 +211,7 @@ public class ReservationService {
         return start.toLocalTime() + " - " + end.toLocalTime();
     }
 
+    //wrapper-metode til frontend, der gør så man kan se timerange før man har booket
     public String getPackageTimeRangeForDate(Integer packageId, String dayOfActivity, Integer participants){
 
         Package pkg = packageRepository.findById(packageId).orElseThrow();
@@ -208,6 +219,49 @@ public class ReservationService {
         List<Timeslot> timeslots =
                 findPackageTimeslots(pkg, dayOfActivity, participants);
 
+        if(timeslots.isEmpty()){
+            throw new RuntimeException("Ingen tider tilgængelige");
+        }
+
         return getPackageTimeRange(timeslots);
+    }
+
+    //Finder timeslots til kalenderen for firmapakker
+    public List<Timeslot> getPackageTimeslots(Integer packageId){
+
+        Package pkg = packageRepository.findById(packageId).orElseThrow();
+
+        List<Timeslot> result = new ArrayList<>();
+
+        for(Activity activity : pkg.getActivities()){
+            result.addAll(timeslotRepository.findAllByActivityId(activity.getId()));
+        }
+
+        return result;
+    }
+
+    //wrapper-metode der gør at frontend kan se hvilke dage der er ledige før man har klikket på datoen
+    public List<String> getAvailablePackageDays(Integer packageId, Integer participants){
+
+        Package pkg = packageRepository.findById(packageId).orElseThrow();
+
+        List<String> availableDays = new ArrayList<>();
+
+        List<Timeslot> allTimeslots = getPackageTimeslots(packageId);
+
+        for(Timeslot t : allTimeslots){
+            String day = t.getDayOfActivity().toString();
+
+            if(!availableDays.contains(day)){
+
+                List<Timeslot> timeslots = findPackageTimeslots(pkg, day, participants);
+
+                    if(!timeslots.isEmpty()){
+                        availableDays.add(day);
+                    }
+                }
+            }
+
+        return availableDays;
     }
 }
