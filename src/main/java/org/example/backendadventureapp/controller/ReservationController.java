@@ -14,7 +14,7 @@ import java.util.List;
 //    * Wraps RunTimeExceptions in HTTP 500 response.
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = {"http://localhost:63342", "http://4.235.123.111"})
 public class ReservationController {
 
     @Autowired
