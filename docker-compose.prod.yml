@@ -6,7 +6,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mysqldata:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   app:
     image: ghcr.io/jemsf2026/backendadventureapp:latest
