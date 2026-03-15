@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+  app:
+    image: ghcr.io/jemsf2026/backendadventureapp:latest
+    environment:
+      DATABASE_URL: jdbc:mysql://db:3306/mydb
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - db
+
+  frontend:
+    image: ghcr.io/jemsf2026/frontendadventureapp:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+volumes:
+  mysqldata:
