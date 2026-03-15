@@ -23,7 +23,7 @@ public class ReservationController {
 
     //Fetch single Reservation object on bookingNumber attribute:
     //Note: If reservation is null, and an exception is thrown, this endpoints might return an http response without a body.
-    @GetMapping("/{bookingNumber}")
+    @GetMapping("/reservation/{bookingNumber}")
     public Reservation getReservationByBookingNumber(@PathVariable String bookingNumber) {
         Reservation reservation = reservationService.findReservationByBookingnumber(bookingNumber);
         if(reservation == null) {
@@ -63,4 +63,11 @@ public class ReservationController {
     public List<String> getAvailableDays(@RequestParam Integer packageId, @RequestParam Integer participants){
         return reservationService.getAvailablePackageDays(packageId, participants);
     }
+    //Cancel single reservation object on object:(no deletion of reservation entity, but update of its attributes,
+    //so that Timeslot objects related to Reservation object are unrelated again.
+    @PostMapping("reservation/{id}/cancel")
+    public void deleteReservationById(@PathVariable Integer id) {
+        reservationService.cancelReservation(id);
+    }
+
 }

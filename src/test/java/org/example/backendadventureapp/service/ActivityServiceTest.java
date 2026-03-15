@@ -1,7 +1,10 @@
 package org.example.backendadventureapp.service;
 
 import org.example.backendadventureapp.model.Activity;
+import org.example.backendadventureapp.model.Reservation;
+import org.example.backendadventureapp.model.Timeslot;
 import org.example.backendadventureapp.repository.ActivityRepository;
+import org.example.backendadventureapp.repository.TimeslotRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +22,9 @@ class ActivityServiceTest {
 
     @Autowired
     ActivityRepository activityRepository;
+
+    @Autowired
+    TimeslotRepository timeslotRepository;
 
     @Autowired
     ActivityService activityService;
@@ -83,6 +89,29 @@ class ActivityServiceTest {
         assertEquals(1, result.getId());
         assertEquals("Paintball", result.getName());
         verify(activityRepository, times(1)).findById(1);
+    }
+
+    @Test
+    void deleteActivityById_callsRepositoryDelete() {
+        doNothing().when(activityRepository).deleteById(1);
+        when(timeslotRepository.findAllByActivityId(1)).thenReturn(Collections.emptyList());
+
+        activityService.deleteActivityById(1);
+
+        verify(activityRepository, times(1)).deleteById(1);
+    }
+
+    @Test
+    void deleteActivityById_throwsWhenActivityHasReservation() {
+        Reservation reservation = new Reservation(1, null, "12345678", null, null, null);
+        Timeslot timeslot = new Timeslot(1, null, reservation, null, null, null, null, 0);
+        when(timeslotRepository.findAllByActivityId(1)).thenReturn(List.of(timeslot));
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class,
+                () -> activityService.deleteActivityById(1));
+
+        assertTrue(ex.getMessage().contains("12345678"));
+        verify(activityRepository, never()).deleteById(1);
     }
 
     @Test

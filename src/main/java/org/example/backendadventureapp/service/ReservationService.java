@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -32,6 +33,28 @@ public class ReservationService {
         return reservationRepository.findByBookingNumber(bookingNumber);
     }
 
+    //update single reservation on id
+    public void cancelReservation(Integer id) {
+
+        //Load the given Reservation object from the database at this point.
+        //Use of orElseThrow() to pick out and unwrap Reservation object from Option<Reservation> retuned from save() from CRUDRepository interfafe.
+        Reservation reservationToChange = reservationRepository.findById(id).orElseThrow(() -> new RuntimeException("Reservation not found you dingleberry"));
+
+        //Set attributes reservationId, employeeId and participants to 0 in TimeSlot.
+        List<Timeslot> timeslots = reservationToChange.getTimeslots();
+        if (timeslots != null || !timeslots.isEmpty()) {
+            for (Timeslot temp : timeslots) {
+                temp.setParticipants(0);
+                temp.setEmployee(null);
+                temp.setReservation(null);
+            }
+            reservationRepository.save(reservationToChange);
+        } else {
+            throw new RuntimeException("Timeslots to perform changes to were not found on this reservation");
+        }
+    }
+
+
     public Reservation createReservation(Reservation reservation) {
 
         validateCustomer(reservation);
@@ -50,17 +73,17 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    private void validateCustomer(Reservation reservation){
+    private void validateCustomer(Reservation reservation) {
 
-        if(reservation.getCustomer() == null){
+        if (reservation.getCustomer() == null) {
             throw new RuntimeException("Kundeoplysninger er påkrævet");
         }
 
         Customer customer = reservation.getCustomer();
 
-        if(reservation.getCustomer().getFirstName() == null ||
+        if (reservation.getCustomer().getFirstName() == null ||
                 reservation.getCustomer().getLastName() == null ||
-                reservation.getCustomer().getEmail() == null){
+                reservation.getCustomer().getEmail() == null) {
             throw new RuntimeException("Manglende kundeoplsyninger");
         }
 
@@ -68,9 +91,9 @@ public class ReservationService {
                 .findById(customer.getCustomerType().getId())
                 .orElseThrow();
 
-        if(type.getId() == 2){
-            if(customer.getCompanyName() == null || customer.getCompanyName().isBlank() ||
-                    customer.getCvr() == null){
+        if (type.getId() == 2) {
+            if (customer.getCompanyName() == null || customer.getCompanyName().isBlank() ||
+                    customer.getCvr() == null) {
                 throw new RuntimeException("CVR og Virksomhedsnavn påkrævet for virksomheder");
             }
         }
@@ -82,10 +105,10 @@ public class ReservationService {
 
         List<Timeslot> attachedTimeslots = new ArrayList<>();
 
-        for (Timeslot t : reservation.getTimeslots()){
+        for (Timeslot t : reservation.getTimeslots()) {
             Timeslot timeslot = timeslotRepository.findById(t.getId()).orElseThrow();
 
-            if(timeslot.getReservation() != null){
+            if (timeslot.getReservation() != null) {
                 throw new RuntimeException("Tidspunktet er booket af en anden kunde.");
             }
 
@@ -103,18 +126,18 @@ public class ReservationService {
         reservation.setTimeslots(attachedTimeslots);
     }
 
-    public void calculatePrice(Reservation reservation){
+    public void calculatePrice(Reservation reservation) {
 
         double totalPrice = 0;
 
-        for(var timeslot : reservation.getTimeslots()){
+        for (var timeslot : reservation.getTimeslots()) {
             totalPrice += timeslot.getActivity().getPrice();
         }
 
         reservation.setPrice(totalPrice);
     }
 
-    public String generateBookingNumber(){
+    public String generateBookingNumber() {
 
         Random random = new Random();
         int number = random.nextInt(90000000) + 10000000;
