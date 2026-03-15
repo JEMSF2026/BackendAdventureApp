@@ -59,6 +59,9 @@ jobs:
           script: |
             cd ~/my-app
 
+            # Pull the latest code (compose files, init scripts, etc.)
+            git pull
+
             # Pull the latest images
             docker compose -f docker-compose.prod.yml pull
 

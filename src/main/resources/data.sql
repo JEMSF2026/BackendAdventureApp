@@ -115,14 +115,14 @@ INSERT INTO package_activities (package_id, activities_id) VALUES (3, 1);
 INSERT INTO package_activities (package_id, activities_id) VALUES (3, 2);
 INSERT INTO package_activities (package_id, activities_id) VALUES (3, 4);
 
--- Reset sequences so auto-generated IDs don't conflict with seed data
-ALTER TABLE equipment_state ALTER COLUMN id RESTART WITH 4;
-ALTER TABLE customer_type ALTER COLUMN id RESTART WITH 3;
-ALTER TABLE employee ALTER COLUMN id RESTART WITH 3;
-ALTER TABLE customer ALTER COLUMN id RESTART WITH 7;
-ALTER TABLE activity ALTER COLUMN id RESTART WITH 5;
-ALTER TABLE equipment ALTER COLUMN id RESTART WITH 13;
-ALTER TABLE package ALTER COLUMN id RESTART WITH 4;
+-- Reset auto-increment so generated IDs don't conflict with seed data
+ALTER TABLE equipment_state AUTO_INCREMENT = 4;
+ALTER TABLE customer_type AUTO_INCREMENT = 3;
+ALTER TABLE employee AUTO_INCREMENT = 3;
+ALTER TABLE customer AUTO_INCREMENT = 7;
+ALTER TABLE activity AUTO_INCREMENT = 5;
+ALTER TABLE equipment AUTO_INCREMENT = 13;
+ALTER TABLE package AUTO_INCREMENT = 4;
 
 -- Reservation
 INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
@@ -143,7 +143,7 @@ VALUES (5, '44444444', '2026-03-05 14:00:00', 249.00, 5);
 INSERT INTO reservation (id, booking_number, date_of_reservation, price, customer_id)
 VALUES (6, '55555555', '2026-03-05 14:00:00', 249.00, 6);
 
-ALTER TABLE reservation ALTER COLUMN id RESTART WITH 7;
+ALTER TABLE reservation AUTO_INCREMENT = 7;
 
 -- Timeslots – marts 2026
 -- Tilgængelige timeslots (ingen reservation)
@@ -455,4 +455,4 @@ VALUES (109, '2026-03-23', '2026-03-23 14:00:00', '2026-03-23 15:30:00', 0, 4, N
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
 VALUES (110, '2026-03-23', '2026-03-23 16:00:00', '2026-03-23 17:30:00', 0, 4, NULL, 2);
 
-ALTER TABLE timeslot ALTER COLUMN id RESTART WITH 111;
+ALTER TABLE timeslot AUTO_INCREMENT = 111;
