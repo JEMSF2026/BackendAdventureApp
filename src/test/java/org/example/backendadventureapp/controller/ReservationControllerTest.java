@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -57,7 +57,7 @@ class ReservationControllerTest {
                 .thenReturn(reservation);
 
         // Act + Assert
-        mockMvc.perform(get("/reservations/{bookingNumber}", bookingNumber))
+        mockMvc.perform(get("/reservation/{bookingNumber}", bookingNumber))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.bookingNumber").value("ABC123"));
     }

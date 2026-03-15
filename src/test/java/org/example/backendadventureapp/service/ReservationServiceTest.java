@@ -120,6 +120,7 @@ class ReservationServiceTest {
 
         Reservation reservation = new Reservation();
         reservation.setTimeslots(List.of(requestTimeslot));
+        reservation.setPrice(200.0);
 
         reservationService.attachReservationToTimeslots(reservation);
 
