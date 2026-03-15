@@ -4,25 +4,25 @@ import org.example.backendadventureapp.model.Employee;
 import org.example.backendadventureapp.model.EmployeeRole;
 import org.example.backendadventureapp.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
 
-    @Autowired
+    @Mock
     EmployeeRepository employeeRepository;
 
-    @Autowired
+    @InjectMocks
     AuthService authService;
 
-
-    // Hjælpemetode til at oprette en testmedarbejder
     Employee createEmployee() {
         EmployeeRole employeeRole = new EmployeeRole();
         employeeRole.setName("ADMIN");
@@ -31,7 +31,6 @@ class AuthServiceTest {
 
     @Test
     void login_returnsTrueWithCorrectPassword() {
-        // Password is lastName + last 4 digits of phoneNumber = "Hansen5678"
         when(employeeRepository.findByEmail("jens@jemsadventure.dk")).thenReturn(Optional.of(createEmployee()));
 
         boolean result = authService.login("jens@jemsadventure.dk", "Hansen5678");
@@ -52,7 +51,6 @@ class AuthServiceTest {
 
     @Test
     void login_returnsFalseWithUnknownEmail() {
-        // No employee with this email exists in the system
         when(employeeRepository.findByEmail("unknown@email.dk")).thenReturn(Optional.empty());
 
         boolean result = authService.login("unknown@email.dk", "Hansen5678");

@@ -57,7 +57,7 @@ class ReservationControllerTest {
                 .thenReturn(reservation);
 
         // Act + Assert
-        mockMvc.perform(get("/reservations/{bookingNumber}", bookingNumber))
+        mockMvc.perform(get("/reservation/{bookingNumber}", bookingNumber))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.bookingNumber").value("ABC123"));
     }

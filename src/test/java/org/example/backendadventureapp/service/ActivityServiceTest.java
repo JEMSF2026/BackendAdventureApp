@@ -4,11 +4,14 @@ import org.example.backendadventureapp.model.Activity;
 import org.example.backendadventureapp.model.Reservation;
 import org.example.backendadventureapp.model.Timeslot;
 import org.example.backendadventureapp.repository.ActivityRepository;
+import org.example.backendadventureapp.repository.EquipmentRepository;
+import org.example.backendadventureapp.repository.PackageRepository;
 import org.example.backendadventureapp.repository.TimeslotRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,16 +20,22 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ActivityServiceTest {
 
-    @Autowired
+    @Mock
     ActivityRepository activityRepository;
 
-    @Autowired
+    @Mock
     TimeslotRepository timeslotRepository;
 
-    @Autowired
+    @Mock
+    EquipmentRepository equipmentRepository;
+
+    @Mock
+    PackageRepository packageRepository;
+
+    @InjectMocks
     ActivityService activityService;
 
     @Test
@@ -95,6 +104,8 @@ class ActivityServiceTest {
     void deleteActivityById_callsRepositoryDelete() {
         doNothing().when(activityRepository).deleteById(1);
         when(timeslotRepository.findAllByActivityId(1)).thenReturn(Collections.emptyList());
+        when(equipmentRepository.findAllByActivityId(1)).thenReturn(Collections.emptyList());
+        when(packageRepository.findAll()).thenReturn(Collections.emptyList());
 
         activityService.deleteActivityById(1);
 
