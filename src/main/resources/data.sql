@@ -421,4 +421,38 @@ VALUES (99, '2026-03-31', '2026-03-31 11:00:00', '2026-03-31 12:00:00', 0, 1, NU
 INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
 VALUES (100, '2026-03-31', '2026-03-31 13:00:00', '2026-03-31 14:00:00', 0, 1, NULL, 2);
 
-ALTER TABLE timeslot ALTER COLUMN id RESTART WITH 101;
+-- Go Kart test slots (Action Day package)
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (101, '2026-03-19', '2026-03-19 10:00:00', '2026-03-19 10:30:00', 0, 2, NULL, 2);
+
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (102, '2026-03-19', '2026-03-19 12:00:00', '2026-03-19 12:30:00', 0, 2, NULL, 2);
+
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (103, '2026-03-23', '2026-03-23 10:00:00', '2026-03-23 10:30:00', 0, 2, NULL, 2);
+
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (104, '2026-03-23', '2026-03-23 12:00:00', '2026-03-23 12:30:00', 0, 2, NULL, 2);
+
+-- Adventure Area test slots
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (105, '2026-03-21', '2026-03-21 09:00:00', '2026-03-21 10:30:00', 0, 4, NULL, 2);
+
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (106, '2026-03-21', '2026-03-21 11:00:00', '2026-03-21 12:30:00', 0, 4, NULL, 2);
+
+-- Archery test slots
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (107, '2026-03-21', '2026-03-21 10:00:00', '2026-03-21 10:45:00', 0, 3, NULL, 2);
+
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (108, '2026-03-21', '2026-03-21 12:00:00', '2026-03-21 12:45:00', 0, 3, NULL, 2);
+
+-- Adventure Area slots for Ultimate Adventure
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (109, '2026-03-23', '2026-03-23 14:00:00', '2026-03-23 15:30:00', 0, 4, NULL, 2);
+
+INSERT INTO timeslot (id, day_of_activity, start_time, end_time, participants, activity_id, reservation_id, employee_id)
+VALUES (110, '2026-03-23', '2026-03-23 16:00:00', '2026-03-23 17:30:00', 0, 4, NULL, 2);
+
+ALTER TABLE timeslot ALTER COLUMN id RESTART WITH 111;
