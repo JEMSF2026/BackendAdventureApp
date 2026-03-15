@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63342",
+@CrossOrigin(origins = {"http://localhost:63342", "http://4.235.123.111"},
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT}
 )
 public class TimeslotController {
