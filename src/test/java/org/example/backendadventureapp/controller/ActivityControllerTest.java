@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -114,5 +115,27 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$.price").value(299.00));
 
         verify(activityService, times(1)).updateActivity(any(Activity.class));
+    }
+
+    @Test
+    void deleteActivity_returns200() throws Exception {
+        doNothing().when(activityService).deleteActivityById(1);
+
+        mockMvc.perform(delete("/activities/delete/1"))
+                .andExpect(status().isOk());
+
+        verify(activityService, times(1)).deleteActivityById(1);
+    }
+
+    @Test
+    void deleteActivity_returns409WhenActivityHasReservation() throws Exception {
+        doThrow(new IllegalStateException("Aktiviteten kan ikke slettes, da bookingnummer 12345678 har booket aktiviteten."))
+                .when(activityService).deleteActivityById(1);
+
+        mockMvc.perform(delete("/activities/delete/1"))
+                .andExpect(status().isConflict())
+                .andExpect(content().string("Aktiviteten kan ikke slettes, da bookingnummer 12345678 har booket aktiviteten."));
+
+        verify(activityService, times(1)).deleteActivityById(1);
     }
 }
