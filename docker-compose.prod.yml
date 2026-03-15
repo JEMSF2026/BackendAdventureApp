@@ -6,6 +6,11 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mysqldata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   app:
     image: ghcr.io/jemsf2026/backendadventureapp:latest
@@ -14,7 +19,8 @@ services:
       DATABASE_USERNAME: root
       DATABASE_PASSWORD: ${DB_PASSWORD}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   frontend:
     image: ghcr.io/jemsf2026/frontendadventureapp:latest
